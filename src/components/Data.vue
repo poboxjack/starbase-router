@@ -1,10 +1,15 @@
 <template>
-<div class="">
-  {{items}}
+<div class="col-md-12">
+  <Item
+    v-for="(item, index) in items"
+    key="index"
+    :item="item" />
 </div>
 </template>
 
 <script>
+import Item from './Item.vue'
+
 export default {
   data() {
     return {
@@ -18,6 +23,7 @@ export default {
   methods: {
     fetchItems() {
       this.items = []
+      this.type = this.$route.params.type
       let initial_ids = [1, 13, 14]
 
       for(let i in initial_ids) {
@@ -29,10 +35,13 @@ export default {
           .then(response => response.json())
           .then(json => this.items.push(json))
       }
-    },
-    created() {
-      this.fetchItems()
     }
+  },
+  created() {
+    this.fetchItems()
+  },
+  components: {
+    Item
   }
 }
 </script>
